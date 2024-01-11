@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2024-01-10T11:11:44+00:00</updated>
+    <updated>2024-01-11T10:25:51+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -400,6 +400,24 @@
       </if>
     </choose>
   </macro>
+  <macro name="patent-author">
+    <choose>
+      <if match="any" variable="author">
+        <names variable="author" suffix=" (inventor)"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="patent-date">
+    <choose>
+      <if match="any" variable="issued">
+        <date form="text" variable="issued" text-case="sentence">
+          <date-part name="day"/>
+          <date-part name="month"/>
+          <date-part name="year"/>
+        </date>
+      </if>
+    </choose>
+  </macro>
   <citation disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year" year-suffix-delimiter=", " after-collapse-delimiter="; ">
     <layout prefix="(" suffix=")" delimiter="; ">
       <group delimiter=", ">
@@ -588,15 +606,15 @@
         <else-if type="patent">
           <group display="block">
             <text macro="patent-assignee" suffix=". "/>
-            <text macro="responsability" suffix=". "/>
             <choose>
               <if variable="author editor translator" match="any">
                 <text macro="title" suffix=". "/>
               </if>
             </choose>
-            <text macro="number" suffix=". "/>
-            <text macro="date" suffix=". "/>
+            <text macro="patent-author" suffix=". "/>
+            <text macro="patent-date" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
+            <text macro="number" suffix=". "/>
             <text macro="collection" suffix=". "/>
             <text macro="url"/>
           </group>
