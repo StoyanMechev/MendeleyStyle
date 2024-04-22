@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <style class="in-text" version="1.0" et-al-min="3" et-al-use-first="1" demote-non-dropping-particle="never" default-locale="en-US" xmlns="http://purl.org/net/xbiblio/csl">
   <info>
-    <title>ISO-690 (author-date, English) - Nikola Vaptsarov Naval Academy TEST</title>
+    <title>ISO-690 (author-date, English) - Nikola Vaptsarov Naval Academy</title>
     <id>https://csl.mendeley.com/styles/607913531/iso690-author-date-en-NVNA-test</id>
     <link href="http://www.zotero.org/styles/iso690-author-date-en" rel="self"/>
     <link href="https://forums.zotero.org/discussion/20342" rel="documentation"/>
@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2024-01-11T18:40:42+00:00</updated>
+    <updated>2024-01-02T13:12:33+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -221,10 +221,10 @@
       <else-if type="patent">
         <choose>
           <if variable="author editor translator" match="any">
-            <text variable="title" font-style="italic" suffix="."/>
+            <text variable="title" suffix="."/>
           </if>
           <else>
-            <text variable="title" font-style="italic" suffix=", "/>
+            <text variable="title" suffix=", "/>
             <text macro="year-date" suffix=". "/>
           </else>
         </choose>
@@ -248,14 +248,7 @@
     </choose>
   </macro>
   <macro name="number">
-    <choose>
-      <if type="patent" match="any">
-        <text variable="number" prefix="Specification "/>
-      </if>
-      <else>
-        <text variable="number"/>
-      </else>
-    </choose>
+    <text variable="number"/>
   </macro>
   <macro name="medium">
     <text variable="medium" prefix=" [" suffix="]"/>
@@ -399,34 +392,6 @@
         </date>
       </if>
     </choose>
-  </macro>
-  <macro name="patent-author">
-    <choose>
-      <if match="any" variable="author">
-        <names variable="author" suffix=" (inventor)">
-          <name initialize-with="">
-            <name-part name="family" text-case="uppercase"/>
-          </name>
-          <name>
-            <name-part name="given"/>
-          </name>
-        </names>
-      </if>
-    </choose>
-  </macro>
-  <macro name="patent-date">
-    <choose>
-      <if match="any" variable="issued">
-        <date form="text" variable="issued" text-case="sentence">
-          <date-part name="day"/>
-          <date-part name="month"/>
-          <date-part name="year"/>
-        </date>
-      </if>
-    </choose>
-  </macro>
-  <macro name="patent-assignee">
-    <text value="ASSIGNEE"/>
   </macro>
   <citation disambiguate-add-year-suffix="true" disambiguate-add-names="true" disambiguate-add-givenname="true" collapse="year" year-suffix-delimiter=", " after-collapse-delimiter="; ">
     <layout prefix="(" suffix=")" delimiter="; ">
@@ -615,16 +580,15 @@
         </else-if>
         <else-if type="patent">
           <group display="block">
-            <text macro="patent-assignee" suffix=". "/>
+            <text macro="responsability" suffix=". "/>
             <choose>
               <if variable="author editor translator" match="any">
                 <text macro="title" suffix=". "/>
               </if>
             </choose>
-            <text macro="patent-author" suffix=". "/>
-            <text macro="patent-date" suffix=". "/>
-            <text macro="publisher-group" suffix=". "/>
             <text macro="number" suffix=". "/>
+            <text macro="date" suffix=". "/>
+            <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
             <text macro="url"/>
           </group>
