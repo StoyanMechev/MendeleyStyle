@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <style class="in-text" version="1.0" et-al-min="3" et-al-use-first="1" demote-non-dropping-particle="never" default-locale="en-US" xmlns="http://purl.org/net/xbiblio/csl">
   <info>
     <title>ISO-690 (author-date, English) - Nikola Vaptsarov Naval Academy</title>
@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2024-01-02T13:12:33+00:00</updated>
+    <updated>2024-04-22T13:23:01+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -171,7 +171,6 @@
       <else-if type="webpage post-weblog" match="any">
         <choose>
           <if variable="author editor translator" match="any">
-            <text macro="year-date"/>
             <text variable="title" suffix=". "/>
             <text macro="WebSite"/>
           </if>
@@ -377,7 +376,7 @@
     <text variable="note"/>
   </macro>
   <macro name="WebSite">
-    <text value="Web Site"/>
+    <text value="Web Site" suffix=". "/>
   </macro>
   <macro name="issn">
     <text variable="ISSN" prefix="ISSN " suffix=". "/>
