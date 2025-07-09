@@ -307,7 +307,7 @@
   </macro>
   <macro name="accessed">
     <choose>
-      <if variable="URL" match="any">
+      <if variable="accessed" match="all">
         <group prefix=" [" suffix="].">
           <text value="viewed" text-case="lowercase" suffix=" "/>
           <text macro="accessedDate"/>
@@ -338,7 +338,26 @@
     <text variable="ISBN" prefix="ISBN "/>
   </macro>
   <macro name="doi">
-    <text variable="DOI" prefix="Available from: https://doi.org/"/>
+    <choose>
+      <if match="any" variable="DOI">
+        <text variable="DOI" prefix="Available from: https://doi.org/"/>
+      </if>
+    </choose>
+  </macro>
+  <macro name="url">
+    <choose>
+      <if variable="URL">
+        <group suffix=".">
+          <text term="retrieved" suffix=" " text-case="capitalize-first"/>
+          <text term="from" suffix=": "/>
+          <text variable="URL"/>
+        </group>
+      </if>
+    </choose>
+    <text macro="accessed" suffix=". "/>
+  </macro>
+  <macro name="doi-thesis">
+    <text variable="DOI" prefix="Available from: https://dx.doi.org/"/>
   </macro>
   <macro name="url">
     <choose>
@@ -467,7 +486,7 @@
                 <text macro="title" suffix=", "/>
               </if>
             </choose>
-            <text macro="issue"/>
+            <text macro="issue" suffix=". "/>
             <text macro="edition" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
@@ -503,6 +522,7 @@
             <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
             <text macro="isbn" suffix=". "/>
+            <text macro="issn"/>
             <text macro="doi" suffix=". "/>
             <text macro="url"/>
           </group>
@@ -517,6 +537,7 @@
             </choose>
             <text macro="genre" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
+            <text macro="doi-thesis"/>
             <text macro="url"/>
           </group>
         </else-if>
@@ -531,7 +552,7 @@
             <text macro="url"/>
           </group>
         </else-if>
-        <else-if type="broadcast motion_picture song" match="any">
+        <else-if type="broadcast song" match="any">
           <group display="block">
             <text macro="responsability" suffix=". "/>
             <choose>
@@ -540,8 +561,23 @@
               </if>
             </choose>
             <text macro="medium" suffix=". "/>
-            <text macro="publisher-group" suffix=", "/>
-            <text macro="date" suffix=". "/>
+            <text macro="publisher-group" suffix=". "/>
+            <text macro="collection" suffix=". "/>
+            <text macro="isbn" suffix=". "/>
+            <text macro="url"/>
+          </group>
+        </else-if>
+        <else-if type="motion_picture" match="any">
+          <group display="block">
+            <text macro="responsability" suffix=". "/>
+            <choose>
+              <if variable="author editor translator" match="any">
+                <text macro="title" suffix=". "/>
+              </if>
+            </choose>
+            <text value="Video" suffix=". "/>
+            <text macro="medium" suffix=". "/>
+            <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
             <text macro="isbn" suffix=". "/>
             <text macro="url"/>
