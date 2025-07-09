@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2025-07-08T10:34:48+00:00</updated>
+    <updated>2025-07-09T06:12:42+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -40,6 +40,7 @@
       <term name="accessed">accessed</term>
       <term name="retrieved">Available</term>
       <term name="from">from</term>
+      <term name="distributor">distributor</term>
     </terms>
   </locale>
   <macro name="editor">
@@ -347,33 +348,30 @@
   <macro name="url">
     <choose>
       <if variable="URL">
-        <group suffix=".">
-          <text term="retrieved" suffix=" " text-case="capitalize-first"/>
-          <text term="from" suffix=": "/>
-          <text variable="URL"/>
-        </group>
+        <choose>
+          <if type="motion_picture" match="any">
+            <group suffix=".">
+              <text term="retrieved" suffix=" " text-case="capitalize-first"/>
+              <text term="from" suffix=": "/>
+              <text variable="publisher-place"/>
+              <text value="distributor" prefix="(" suffix="), "/>
+              <text variable="URL"/>
+            </group>
+          </if>
+          <else>
+            <group suffix=".">
+              <text term="retrieved" suffix=" " text-case="capitalize-first"/>
+              <text term="from" suffix=": "/>
+              <text variable="URL"/>
+            </group>
+          </else>
+        </choose>
       </if>
     </choose>
     <text macro="accessed" suffix=". "/>
   </macro>
   <macro name="doi-thesis">
     <text variable="DOI" prefix="Available from: https://dx.doi.org/"/>
-  </macro>
-  <macro name="url">
-    <choose>
-      <if variable="DOI" match="none">
-        <choose>
-          <if variable="URL">
-            <group suffix=".">
-              <text term="retrieved" suffix=" " text-case="capitalize-first"/>
-              <text term="from" suffix=": "/>
-              <text variable="URL"/>
-            </group>
-          </if>
-        </choose>
-      </if>
-    </choose>
-    <text macro="accessed" suffix=". "/>
   </macro>
   <macro name="archive">
     <group delimiter=": ">

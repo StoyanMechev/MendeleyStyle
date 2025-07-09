@@ -356,6 +356,25 @@
     </choose>
     <text macro="accessed" suffix=". "/>
   </macro>
+   <macro name="doi-thesis">
+    <text variable="DOI" prefix="Available from: https://dx.doi.org/"/>
+  </macro>
+  <macro name="url">
+    <choose>
+      <if variable="DOI" match="none">
+        <choose>
+          <if variable="URL">
+            <group suffix=".">
+              <text term="retrieved" suffix=" " text-case="capitalize-first"/>
+              <text term="from" suffix=": "/>
+              <text variable="URL"/>
+            </group>
+          </if>
+        </choose>
+      </if>
+    </choose>
+    <text macro="accessed" suffix=". "/>
+  </macro>
   <macro name="archive">
     <group delimiter=": ">
       <text variable="archive"/>
