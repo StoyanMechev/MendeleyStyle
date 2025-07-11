@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2024-04-22T13:23:01+00:00</updated>
+    <updated>2025-07-11T05:42:26+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -287,6 +287,9 @@
       <text variable="publisher"/>
     </group>
   </macro>
+  <macro name="publisher-motion-picture">
+    <text variable="publisher-place"/>
+  </macro>
   <macro name="issue">
     <group delimiter=", ">
       <text variable="volume" prefix="vol. "/>
@@ -307,7 +310,7 @@
   </macro>
   <macro name="accessed">
     <choose>
-      <if variable="URL" match="any">
+      <if variable="accessed" match="all">
         <group prefix=" [" suffix="].">
           <text value="viewed" text-case="lowercase" suffix=" "/>
           <text macro="accessedDate"/>
@@ -338,42 +341,39 @@
     <text variable="ISBN" prefix="ISBN "/>
   </macro>
   <macro name="doi">
-    <text variable="DOI" prefix="Available from: https://doi.org/"/>
+    <choose>
+      <if match="any" variable="DOI">
+        <text variable="DOI" prefix="Available from: https://doi.org/"/>
+      </if>
+    </choose>
   </macro>
   <macro name="url">
     <choose>
-      <if variable="DOI" match="none">
+      <if variable="URL">
         <choose>
-          <if variable="URL">
+          <if type="motion_picture" match="any">
+            <group suffix=".">
+              <text term="retrieved" suffix=" " text-case="capitalize-first"/>
+              <text term="from" suffix=": "/>
+              <text variable="publisher"/>
+              <text value="distributor" prefix=" (" suffix="), "/>
+              <text variable="URL"/>
+            </group>
+          </if>
+          <else>
             <group suffix=".">
               <text term="retrieved" suffix=" " text-case="capitalize-first"/>
               <text term="from" suffix=": "/>
               <text variable="URL"/>
             </group>
-          </if>
+          </else>
         </choose>
       </if>
     </choose>
     <text macro="accessed" suffix=". "/>
   </macro>
-   <macro name="doi-thesis">
+  <macro name="doi-thesis">
     <text variable="DOI" prefix="Available from: https://dx.doi.org/"/>
-  </macro>
-  <macro name="url">
-    <choose>
-      <if variable="DOI" match="none">
-        <choose>
-          <if variable="URL">
-            <group suffix=".">
-              <text term="retrieved" suffix=" " text-case="capitalize-first"/>
-              <text term="from" suffix=": "/>
-              <text variable="URL"/>
-            </group>
-          </if>
-        </choose>
-      </if>
-    </choose>
-    <text macro="accessed" suffix=". "/>
   </macro>
   <macro name="archive">
     <group delimiter=": ">
@@ -486,7 +486,7 @@
                 <text macro="title" suffix=", "/>
               </if>
             </choose>
-            <text macro="issue"/>
+            <text macro="issue" suffix=". "/>
             <text macro="edition" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
@@ -522,6 +522,7 @@
             <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
             <text macro="isbn" suffix=". "/>
+            <text macro="issn"/>
             <text macro="doi" suffix=". "/>
             <text macro="url"/>
           </group>
@@ -536,6 +537,7 @@
             </choose>
             <text macro="genre" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
+            <text macro="doi-thesis"/>
             <text macro="url"/>
           </group>
         </else-if>
@@ -550,7 +552,7 @@
             <text macro="url"/>
           </group>
         </else-if>
-        <else-if type="broadcast motion_picture song" match="any">
+        <else-if type="broadcast song" match="any">
           <group display="block">
             <text macro="responsability" suffix=". "/>
             <choose>
@@ -559,8 +561,23 @@
               </if>
             </choose>
             <text macro="medium" suffix=". "/>
-            <text macro="publisher-group" suffix=", "/>
-            <text macro="date" suffix=". "/>
+            <text macro="publisher-group" suffix=". "/>
+            <text macro="collection" suffix=". "/>
+            <text macro="isbn" suffix=". "/>
+            <text macro="url"/>
+          </group>
+        </else-if>
+        <else-if type="motion_picture" match="any">
+          <group display="block">
+            <text macro="responsability" suffix=". "/>
+            <choose>
+              <if variable="author editor translator" match="any">
+                <text macro="title" suffix=". "/>
+              </if>
+            </choose>
+            <text value="Video" suffix=". "/>
+            <text macro="medium" suffix=". "/>
+            <text macro="publisher-motion-picture" suffix=". "/>
             <text macro="collection" suffix=". "/>
             <text macro="isbn" suffix=". "/>
             <text macro="url"/>
