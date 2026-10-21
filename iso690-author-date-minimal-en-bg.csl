@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="en">
+  <info>
+    <title>ISO-690 (Author-Date) Minimal EN/BG (CSL 1.0 debug language with fallback)</title>
+    <id>https://example.org/styles/iso690-author-date-minimal-en-bg-debug-fallback</id>
+    <link href="https://example.org/styles/iso690-author-date-minimal-en-bg-debug-fallback" rel="self"/>
+    <author>
+      <name>Custom NVNA</name>
+    </author>
+    <category citation-format="author-date"/>
+    <summary>Minimal ISO-690 author-date style with language debug output and fallback if missing</summary>
+    <updated>2025-09-29T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">
+      This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License
+    </rights>
+  </info>
+
+  <!-- English locale -->
+  <locale xml:lang="en">
+    <terms>
+      <term name="et-al" form="short">et al.</term>
+      <term name="no date">[no date]</term>
+    </terms>
+  </locale>
+
+  <!-- Bulgarian locale -->
+  <locale xml:lang="bg">
+    <terms>
+      <term name="et-al" form="short">и др.</term>
+      <term name="no date">[няма дата]</term>
+    </terms>
+  </locale>
+
+  <!-- Author macro -->
+  <macro name="author">
+    <names variable="author" delimiter=", ">
+      <name form="long" and="text" et-al-min="3" et-al-use-first="1"/>
+    </names>
+  </macro>
+
+  <!-- Year macro -->
+  <macro name="year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Citation -->
+  <citation collapse="year" disambiguate-add-year-suffix="true">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author"/>
+        <text macro="year"/>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- Bibliography -->
+  <bibliography>
+    <sort>
+      <key macro="author"/>
+      <key macro="year"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=", ">
+        <text macro="author"/>
+        <text macro="year"/>
+        <text variable="title" font-style="italic"/>
+        <text variable="container-title"/>
+        <text variable="publisher"/>
+        <!-- DEBUG: Check if language is present -->
+        <choose>
+          <if variable="language">
+            <text variable="language" prefix="[lang=" suffix="]"/>
+          </if>
+          <else>
+            <text value="не са прехвърлени данни за езика"/>
+          </else>
+        </choose>
+        <text variable="DOI"/>
+        <text variable="URL"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

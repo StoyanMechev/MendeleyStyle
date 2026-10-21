@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="bg">
+  <info>
+    <title>Minimal Author-Date BG/EN - Conditional et al.</title>
+    <id>https://example.org/styles/minimal-author-date-conditional-et-al</id>
+    <link href="https://example.org/styles/minimal-author-date-debug-et-al" rel="self"/>
+    <author>
+      <name>Stoyan Mechev</name>
+      <email>st.mechev@naval-acad.bg</email>
+    </author>
+    <category citation-format="author-date"/>
+    <summary>Minimal citation style with conditional et-al (bg/en), showing language variable</summary>
+    <updated>2025-10-03T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <!-- Macros -->
+  <!-- Author macro -->
+  <!-- Author macro -->
+  <macro name="author">
+    <choose>
+      <!-- Ако има език (какъвто и да е) -->
+      <if variable="language">
+        <names variable="author" delimiter=", ">
+          <name form="long" and="text" et-al-min="3" et-al-use-first="1"/>
+          <et-al font-style="normal">sdf</et-al>
+        </names>
+      </if>
+      <!-- Ако няма език (по подразбиране BG) -->
+      <else>
+        <names variable="author" delimiter=", ">
+          <name form="long" and="text" et-al-min="3" et-al-use-first="1"/>
+          <et-al font-style="normal">и др.</et-al>
+        </names>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="[няма дата]"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Citation -->
+  <citation collapse="year" disambiguate-add-year-suffix="true">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author"/>
+        <text macro="year"/>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- Bibliography -->
+  <bibliography>
+    <sort>
+      <key macro="author"/>
+      <key macro="year"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=", ">
+        <text macro="author"/>
+        <text macro="year"/>
+        <text variable="title" font-style="italic"/>
+        <text variable="container-title"/>
+        <text variable="publisher"/>
+        <text variable="DOI"/>
+        <text variable="URL"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

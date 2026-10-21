@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0">
+  <info>
+    <title>ISO 690:2021 двуезичен (BG / EN) примерен стил</title>
+    <id>https://csl.mendeley.com/styles/607913531/iso690-author-date-en-bg</id>
+    <link href="http://example.org/styles/iso690-bg-en" rel="self"/>
+    <author>
+      <name>Ваше Име</name>
+    </author>
+    <category citation-format="author-date"/>
+    <updated>2025-09-25T00:00:00+00:00</updated>
+    <summary>Примерен стил ISO 690 с поддръжка на български / английски за автори</summary>
+  </info>
+
+  <!-- Макрос за автори с условна логика за език -->
+  <macro name="author">
+    <choose>
+      <!-- ако списък с автори е празен, може substitute, но тук пропускаме -->
+      <if variable="language" match="any" value="bg">
+        <names variable="author">
+          <name form="long" and="text" delimiter=", " delimiter-precedes-last="always"/>
+          <!-- при повече от едно авторско име: добавяме „и др.“ -->
+          <label form="short" prefix=" " text-case="lowercase" strip-periods="true"/>
+          <substitute>
+            <text value="и др."/>
+          </substitute>
+        </names>
+      </if>
+      <else-if variable="language" match="any" value="en">
+        <names variable="author">
+          <name form="long" and="text" delimiter=", " delimiter-precedes-last="always"/>
+          <label form="short" prefix=" " text-case="lowercase"/>
+          <substitute>
+            <text value="et al."/>
+          </substitute>
+        </names>
+      </else-if>
+      <else>
+        <!-- по подразбиране: без добавка на „и др.“ или „et al.“ -->
+        <names variable="author">
+          <name form="long" and="text" delimiter=", " delimiter-precedes-last="always"/>
+        </names>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Макрос за годината -->
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <text macro="author"/>
+      <text macro="issued" prefix=", "/>
+    </layout>
+  </citation>
+
+  <bibliography>
+    <layout>
+      <text macro="author"/>
+      <text macro="issued" prefix=" (" suffix=")."/>
+      <text variable="title" prefix=" "/>
+      <!-- след това можете да добавите поле за издателство, място и др. според ISO 690 -->
+    </layout>
+  </bibliography>
+</style>
