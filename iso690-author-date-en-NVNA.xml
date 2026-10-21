@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2026-06-03T12:53:01+00:00</updated>
+    <updated>2026-10-21T11:29:01+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -48,7 +48,7 @@
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
-      <label prefix=" (" form="short" suffix=".)"/>
+      <label prefix=" (" form="short" suffix=")"/>
     </names>
   </macro>
   <macro name="translator">
@@ -57,7 +57,26 @@
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
-      <label prefix=" (" form="short" suffix=".)"/>
+      <label prefix=" (" form="long" suffix=")"/>
+    </names>
+  </macro>
+  <!-- Secondary contributors for books; initials precede uppercase family names. -->
+  <macro name="book-editor">
+    <names variable="editor">
+      <name initialize-with=". " delimiter=", " delimiter-precedes-last="never">
+        <name-part name="given"/>
+        <name-part name="family" text-case="uppercase"/>
+      </name>
+      <label prefix=" (" form="short" suffix=")"/>
+    </names>
+  </macro>
+  <macro name="book-translator">
+    <names variable="translator">
+      <name initialize-with=". " delimiter=", " delimiter-precedes-last="never">
+        <name-part name="given"/>
+        <name-part name="family" text-case="uppercase"/>
+      </name>
+      <label prefix=" (" form="long" suffix=")"/>
     </names>
   </macro>
   <macro name="responsability">
@@ -166,6 +185,17 @@
           <else>
             <text variable="event" font-style="italic" suffix="."/>
           </else>
+        </choose>
+        <!-- For book chapters with container editors/authors, show translator too.
+             Otherwise container-responsability already uses translator as fallback. -->
+        <choose>
+          <if type="chapter">
+            <choose>
+              <if variable="container-author editor" match="any">
+                <text macro="book-translator" prefix=". "/>
+              </if>
+            </choose>
+          </if>
         </choose>
       </else-if>
       <else-if type="webpage post-weblog" match="any">
@@ -279,7 +309,17 @@
     </choose>
   </macro>
   <macro name="edition">
-    <text variable="edition" form="long"/>
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
   </macro>
   <macro name="publisher-group">
     <group delimiter=": ">
@@ -391,6 +431,9 @@
       </else>
     </choose>
   </macro>
+  <macro name="abstract">
+    <text variable="abstract"/>
+  </macro>
   <macro name="note">
     <text variable="note"/>
   </macro>
@@ -438,6 +481,23 @@
             <choose>
               <if variable="author editor translator" match="any">
                 <text macro="title" suffix=". "/>
+              </if>
+            </choose>
+            <!-- If an author is present, editors are secondary contributors after the title.
+                 Without an author, the existing responsability macro already shows editors. -->
+            <choose>
+              <if type="book" variable="author" match="all">
+                <text macro="book-editor" suffix=". "/>
+              </if>
+            </choose>
+            <!-- If there are no authors and no editors, responsability uses the translator. -->
+            <choose>
+              <if type="book" match="all">
+                <choose>
+                  <if variable="author editor" match="any">
+                    <text macro="book-translator" suffix=". "/>
+                  </if>
+                </choose>
               </if>
             </choose>
             <text macro="genre" suffix=". "/>
