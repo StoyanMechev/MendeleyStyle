@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2026-10-21T11:29:01+00:00</updated>
+    <updated>2026-11-04T11:29:01+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -185,6 +185,11 @@
           <else>
             <text variable="event" font-style="italic" suffix="."/>
           </else>
+        </choose>
+        <choose>
+          <if type="chapter">
+            <text variable="page" prefix=", pp. "/>
+          </if>
         </choose>
         <!-- For book chapters with container editors/authors, show translator too.
              Otherwise container-responsability already uses translator as fallback. -->
@@ -346,6 +351,12 @@
           <text variable="page" prefix="pp. "/>
         </else>
       </choose>
+    </group>
+  </macro>
+  <macro name="chapter-issue">
+    <group delimiter=", ">
+      <text variable="volume" prefix="vol. "/>
+      <text variable="issue" prefix="no. "/>
     </group>
   </macro>
   <macro name="accessed">
@@ -544,10 +555,31 @@
             <text macro="responsability" suffix=". "/>
             <choose>
               <if variable="author editor translator" match="any">
-                <text macro="title" suffix=", "/>
+                <choose>
+                  <if type="chapter" variable="page" match="all">
+                    <choose>
+                      <if variable="volume issue" match="any">
+                        <text macro="title" suffix=", "/>
+                      </if>
+                      <else>
+                        <text macro="title" suffix=". "/>
+                      </else>
+                    </choose>
+                  </if>
+                  <else>
+                    <text macro="title" suffix=", "/>
+                  </else>
+                </choose>
               </if>
             </choose>
-            <text macro="issue" suffix=". "/>
+            <choose>
+              <if type="chapter">
+                <text macro="chapter-issue" suffix=". "/>
+              </if>
+              <else>
+                <text macro="issue" suffix=". "/>
+              </else>
+            </choose>
             <text macro="edition" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
             <text macro="collection" suffix=". "/>
@@ -599,7 +631,14 @@
             </choose>
             <text macro="genre" suffix=". "/>
             <text macro="publisher-group" suffix=". "/>
-            <text macro="doi-thesis"/>
+            <choose>
+              <if variable="DOI URL" match="all">
+                <text macro="doi-thesis" suffix=". "/>
+              </if>
+              <else>
+                <text macro="doi-thesis"/>
+              </else>
+            </choose>
             <text macro="url"/>
           </group>
         </else-if>
@@ -714,9 +753,6 @@
       </choose>
       <group display="right-inline">
         <text macro="archive"/>
-      </group>
-      <group display="right-inline">
-        <text macro="abstract"/>
       </group>
       <group display="right-inline">
         <text macro="note"/>
