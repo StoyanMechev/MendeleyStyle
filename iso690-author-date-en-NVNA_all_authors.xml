@@ -29,7 +29,7 @@
     <category citation-format="author-date"/>
     <category field="generic-base"/>
     <summary>Style based on ISO 690:2021(E), v0.1</summary>
-    <updated>2026-11-04T11:29:01+00:00</updated>
+    <updated>2026-11-16T14:29:01+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
@@ -44,7 +44,7 @@
   </locale>
   <macro name="editor">
     <names variable="editor">
-      <name and="text" name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
@@ -53,7 +53,7 @@
   </macro>
   <macro name="translator">
     <names variable="translator">
-      <name and="text" name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
@@ -81,7 +81,7 @@
   </macro>
   <macro name="responsability">
     <names variable="author">
-      <name and="text" name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
@@ -109,7 +109,7 @@
   </macro>
   <macro name="container-author">
     <names variable="container-author">
-      <name and="text" name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", " delimiter-precedes-last="never">
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
