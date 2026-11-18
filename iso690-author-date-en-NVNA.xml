@@ -650,6 +650,7 @@
                 <text macro="title" suffix=". "/>
               </if>
             </choose>
+            <text macro="doi" suffix=". "/>
             <text macro="url"/>
           </group>
         </else-if>
